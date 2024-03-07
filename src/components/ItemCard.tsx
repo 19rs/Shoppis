@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
     shadowColor: '#333',
     // shadowRadius: 3,
     shadowOpacity: 0.5,
-    maxHeight: 300
+    maxHeight: 300,
   },
   img: {
-    flexShrink: 2,
+    flexShrink: 1,
     width: '30%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignContent: 'center',
     // backgroundColor: 'yellow'
   },
   info: {
@@ -73,10 +73,10 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'justify',
     // fontSize: 15
-    fontSize: 13
+    fontSize: 13,
   },
   price: {
     fontWeight: 'bold',
-    color: 'green'
+    color: 'green',
   }
 });

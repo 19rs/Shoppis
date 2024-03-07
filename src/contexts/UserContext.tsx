@@ -68,22 +68,43 @@ export const UserContextProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  // const login = async (username: string, password: string) => {
+  //   try {
+  //     const url = "https://dummyjson.com/auth/login";
+
+  //     const response = await axios.post<UserDTO>(url, {
+  //       username,
+  //       password,
+  //     });
+
+  //     setUser(response.data);
+  //     storeUser(response.data);
+  //     setToken(response.data.token);
+  //     storeToken(response.data.token);
+  //   } catch (error) {
+  //     showError("Não foi possível realizar o login");
+  //   }
+  // };
+
   const login = async (username: string, password: string) => {
-    try {
-      const url = "https://dummyjson.com/auth/login";
 
-      const response = await axios.post<UserDTO>(url, {
-        username,
-        password,
-      });
+      const user: UserDTO = {
+        id: 1,
+        username: username,
+        email: 'email@email.com',
+        firstName: 'Fulano',
+        lastName: 'da Silva',
+        gender: 'Male',
+        image: '',
+        token: '1'
+      }
 
-      setUser(response.data);
-      storeUser(response.data);
-      setToken(response.data.token);
-      storeToken(response.data.token);
-    } catch (error) {
-      showError("Não foi possível realizar o login");
-    }
+
+      setUser(user);
+      storeUser(user);
+      setToken(user.token);
+      storeToken(user.token);
+
   };
 
   const logout = async () => {
