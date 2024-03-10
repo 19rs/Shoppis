@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
 import { ProductDTO } from "../types/Products";
 import { useRoute } from "@react-navigation/native";
 import { AntDesign } from '@expo/vector-icons';
@@ -8,25 +8,29 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import PagerView from 'react-native-pager-view';
 import { FontAwesome } from '@expo/vector-icons';
+import { CartContext } from "../contexts/CartContext";
 
 
 const Details = () => {
   const routes = useRoute();
   const {title, thumbnail, description, images, price, rating, brand, category, discountPercentage } = routes.params as ProductDTO;
+  const product: ProductDTO = routes.params as ProductDTO;
+
+  const { addProduct } = useContext(CartContext);
 
   const precoComDesconto: number = Math.round(price - (price * discountPercentage / 100));
 
-    const ratingIcon = () => {
+  const ratingIcon = () => {
     const nota = Math.trunc(rating);
     let array: any[] =  []
 
     for(let i = 0; i < nota; i++) {
       array.push(
-      <FontAwesome name="star" size={24} color="gold" key={i}/>
+      <FontAwesome name="star" size={20} color="gold" key={i}/>
       )
     }
     if(nota < 5 && (rating - nota) >= 0.5) {
-      array.push(<FontAwesome name="star-half" size={24} color="gold" key='5'/>);
+      array.push(<FontAwesome name="star-half" size={20} color="gold" key='5'/>);
     }
     return array;
   }
@@ -43,7 +47,6 @@ const Details = () => {
 
         <Text style={ styles.title }>{ title }</Text>
         <Text style={ styles.description }>{ description }</Text>
-        {/* <MaterialIcons name="discount" size={24} color="black" /> */}
 
         <View style={ styles.viewBrandCategory }>
           <View style={ styles.viewBrand }>
@@ -53,30 +56,37 @@ const Details = () => {
           <View style={ styles.viewCategory }>
             <AntDesign name="tagso" size={24} color="black" />
             <Text>{ category }</Text>
+          </View>            
+        </View>
+
+        <View style={ styles.viewRatingDiscount }>
+          <View style={ styles.viewRating }>
+            <Text>Rating:</Text>
+            { ratingIcon() }
           </View>
+          {/* <Text>Discount: { discountPercentage } %</Text> */}
         </View>
         
-        <Text>Rating: { rating }</Text>
-        <Ionicons name="pricetag-outline" size={24} color="black" />
         
        
-        <View style={{flexDirection: 'row'}}>
-          { ratingIcon() }
-        </View>
-        <MaterialIcons name="category" size={24} color="black" />
-        <Text>Discount: { discountPercentage } %</Text>
+        
+        {/* <Text>Discount: { discountPercentage } %</Text> */}
 
         <View style={ styles.viewPrice }>
-          <Text style={ styles.textPrice }>Preço: </Text>
+          <Text style={ styles.textPrice }>Price: </Text>
           <Text style={ styles.price }>${ price }</Text>
           <Text style={ styles.priceWithDiscount }>${ precoComDesconto }</Text>
+          {/* <Text>{ discountPercentage }% OFF</Text> */}
         </View>
         
-  
-       
-
-        
-      {/* </View> */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            console.log(product)
+            addProduct(product)}}
+        >
+          <Text style={styles.buttonText}>Add to Cart</Text>
+        </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -93,19 +103,16 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    // backgroundColor: '#fff',
     backgroundColor: '#f8fafc',
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderTopWidth: 2,
     borderBottomWidth: 3,
-    // borderColor: '#ccc',
     borderColor: '#e2e8f0',
     shadowColor: '#ccc',
     shadowOpacity: 0.5,
   },
   description: {
-    // width: '100%',
     justifyContent: 'center',
     textAlign: 'justify',
     paddingVertical: 30,
@@ -118,10 +125,64 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginHorizontal: 10,
   },
+  viewBrandCategory: {
+    flexDirection: 'row',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    columnGap: 50,
+    width: '95%',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#f8fafc',
+    borderColor: '#e2e8f0',
+    borderWidth: 1,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+  },
+  viewBrand: {
+    flexDirection: 'row',
+    columnGap: 5,
+    alignContent: 'center',
+  },
+  viewRating: {
+    flexDirection: 'row',
+    columnGap: 5,
+    alignContent: 'center',
+  },
+  viewRatingDiscount: {
+    flexDirection: 'row',
+    paddingHorizontal: 35,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // justifyContent: 'space-between',
+    width: '95%',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#f8fafc',
+    borderColor: '#e2e8f0',
+    borderWidth: 1,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+  },
+  viewCategory: {
+    flexDirection: 'row',
+    columnGap: 5,
+    justifyContent: 'center',
+  },
+  
   viewPrice: {
     width: '80%',
     flexDirection: 'row',
+    justifyContent: 'center',
     columnGap: 5,
+    marginVertical: 10
   },
   textPrice: {
     fontSize: 20,
@@ -138,29 +199,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'green',
   },
-  viewBrandCategory: {
-    // width: '70%',
-    paddingHorizontal: 30,
-    // backgroundColor: 'red',
-    alignItems: 'flex-start'
+  button: {
+    width: "80%",
+    height: 50,
+    backgroundColor: "#2563EB",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 5,
   },
-  viewBrand: {
-    flexDirection: 'row',
-    columnGap: 5,
-    justifyContent: 'center',
-    // alignContent: 'center',
+  buttonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: 'bold'
   },
-  viewCategory: {
-    flexDirection: 'row',
-    columnGap: 5,
-    justifyContent: 'center',
-    // alignContent: 'center'
-  },
-  // inStock: {
-  //   fontSize: 15,
-  //   fontWeight: 'bold',
-  //   color: stock <= 10 ? 'red' : 'black',
-  // },
   viewPager: {
     flex: 1,
   },

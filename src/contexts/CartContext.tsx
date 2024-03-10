@@ -41,6 +41,10 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
   };
 
   const addProduct = (value: ProductDTO) => {
+    // if (!cart) {
+    //   setCart([]);
+    // }
+
     const existingProduct = cart.find(({ product }) => value.id === product.id);
 
     if (existingProduct) {
@@ -59,6 +63,7 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
       setCart(newCart);
       storeCart(newCart);
     }
+    console.log(cart)
   };
 
   const removeProduct = () => {};
