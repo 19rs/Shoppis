@@ -2,14 +2,25 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { showError } from "../components/Toast";
 
 const User = () => {
   const { user, getUser, logout } = useContext(UserContext);
 
-  useEffect(() => {
-    getUser()
-  }, []);
+  // useEffect(() => {
+  //   getUser()
+  // }, []);
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await getUser();
+      } catch (error) {
+        showError("Não foi possível recuperar os dados do usuário");
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <SafeAreaView style={ styles.container }>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity, ScrollView } from "react-native";
 import React, { useContext } from "react";
 import { ProductDTO } from "../types/Products";
 import { useRoute } from "@react-navigation/native";
@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import PagerView from 'react-native-pager-view';
 import { FontAwesome } from '@expo/vector-icons';
 import { CartContext } from "../contexts/CartContext";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 
 const Details = () => {
@@ -37,12 +38,14 @@ const Details = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scroll}>
       <View style={{width: '95%', borderWidth: 2, borderRadius: 5, borderColor: '#e2e8f0', marginTop: 10, padding: 20, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
         <Image
             resizeMode="contain"
             style={{ width: 280, height: 250 }}
             source={{ uri: thumbnail }}
         />
+        <Text style={{position: 'absolute', top: 5, right: 5, fontWeight: 'bold', color: 'white', backgroundColor: '#16a34a', paddingVertical: 5, paddingHorizontal: 8, borderRadius: 5, shadowColor: '#fff', shadowRadius: 5}}>{ discountPercentage }% OFF</Text>
       </View>
 
         <Text style={ styles.title }>{ title }</Text>
@@ -85,8 +88,10 @@ const Details = () => {
             console.log(product)
             addProduct(product)}}
         >
+          <FontAwesome5 name="cart-plus" size={24} style={{marginRight: 20}} color="white" />
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
+    </ScrollView>
     </SafeAreaView>
   );
 };
@@ -94,9 +99,15 @@ const Details = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 10,
-    rowGap: 10,
+    // paddingVertical: 10,
+    // rowGap: 10,
     alignItems: 'center',
+  },
+  scroll: {
+    // flex: 1,
+    alignItems: 'center',
+    rowGap: 10,
+    marginBottom: 15,
   },
   title: {
     width: '100%',
@@ -205,12 +216,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 5,
+    // marginBottom: 5,
+    flexDirection: 'row',
   },
   buttonText: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginRight: 20
   },
   viewPager: {
     flex: 1,

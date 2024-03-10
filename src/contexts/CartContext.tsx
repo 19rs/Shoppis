@@ -66,7 +66,18 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
     console.log(cart)
   };
 
-  const removeProduct = () => {};
+  const removeProduct = (value: number) => {
+    const newCart = [...cart];
+
+    const itemIndex = newCart.findIndex(({ product }) => value === product.id);
+    console.log('achou')
+    console.log(itemIndex)
+    console.log(newCart[itemIndex].quantity)
+
+    newCart[itemIndex].quantity > 1 ? newCart[itemIndex].quantity-- : newCart.splice(itemIndex, 1) 
+    setCart(newCart);
+    storeCart(newCart);
+  };
 
   return (
     <CartContext.Provider value={{ cart, getCart, addProduct, removeProduct }}>
