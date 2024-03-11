@@ -8,6 +8,9 @@ interface Props {
 }
 const ItemCard = ({ product }: Props) => {
   const navigation = useNavigation<any>();
+
+  const precoComDesconto: number = Math.round(product.price - (product.price * product.discountPercentage / 100));
+
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Details", product)}>
       <View style={ styles.card }>
@@ -21,7 +24,11 @@ const ItemCard = ({ product }: Props) => {
         <View style={ styles.info }>
           <Text style={ styles.title }>{product.title}</Text>
           <Text style={ styles.description }>{product.description}</Text>
-          <Text style={ styles.price }>$ {product.price}</Text>
+          {/* <Text style={ styles.price }>$ {product.price}</Text> */}
+          <View style={ styles.viewPrice }>
+            <Text style={ styles.price }>${ product.price }</Text>
+            <Text style={ styles.priceWithDiscount }>${ precoComDesconto }</Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -75,8 +82,20 @@ const styles = StyleSheet.create({
     // fontSize: 15
     fontSize: 13,
   },
+  viewPrice: {
+    // width: '80%',
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    columnGap: 5,
+    marginVertical: 10
+  },
   price: {
     fontWeight: 'bold',
+    color: 'brown',
+    textDecorationLine: 'line-through',
+  },
+  priceWithDiscount: {
+    fontWeight: 'bold',
     color: 'green',
-  }
+  },
 });

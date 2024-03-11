@@ -2,13 +2,14 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useContext } from "react";
 import { ICartItem } from "../types/Products";
 import { CartContext } from "../contexts/CartContext";
+import { FontAwesome } from '@expo/vector-icons';
 
 interface Props {
   item: ICartItem;
 }
 
 const CartCard = ({ item }: Props) => {
-  const { removeProduct } = useContext(CartContext);
+  const { addProduct, removeProduct } = useContext(CartContext);
 
   const precoComDesconto: number = Math.round(item.product.price - (item.product.price * item.product.discountPercentage / 100));
 
@@ -30,12 +31,20 @@ const CartCard = ({ item }: Props) => {
         </View>
 
         <TouchableOpacity
-          style={styles.button}
+         
           onPress={() => {
             removeProduct(item.product.id)}}
         >
-          <Text style={styles.buttonText}>Add to Cart</Text>
+          <FontAwesome name="minus-circle" size={24} color="red" />
         </TouchableOpacity>
+
+        <TouchableOpacity
+         
+         onPress={() => {
+           addProduct(item.product)}}
+       >
+        <FontAwesome name="plus-circle" size={24} color="green" />
+       </TouchableOpacity>
       </View>
   );
 };

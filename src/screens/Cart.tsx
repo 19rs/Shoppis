@@ -10,10 +10,13 @@ const Cart = () => {
   
   let cartTotal = () => {
     let total = 0;
-    cart.forEach(item => {
-      total += Math.round((item.product.price - (item.product.price * item.product.discountPercentage / 100)) * item.quantity);
-    })
-    return total;
+
+    if(cart) {
+      cart.forEach(item => {
+        total += Math.round((item.product.price - (item.product.price * item.product.discountPercentage / 100)) * item.quantity);
+      })
+    }
+      return total;
   }
 
   useEffect(() => {
@@ -25,6 +28,7 @@ const Cart = () => {
       }
     };
     getData();
+    console.log('carrinho')
     console.log(cart)
   }, []);
 

@@ -66,6 +66,7 @@ const Details = () => {
           <View style={ styles.viewRating }>
             <Text>Rating:</Text>
             { ratingIcon() }
+            {/* <Text style={{ marginLeft: 10}}>({ rating })</Text> */}
           </View>
           {/* <Text>Discount: { discountPercentage } %</Text> */}
         </View>
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   viewBrand: {
     flexDirection: 'row',
     columnGap: 5,
-    alignContent: 'center',
+    alignItems: 'center',
   },
   viewRating: {
     flexDirection: 'row',
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   viewCategory: {
     flexDirection: 'row',
     columnGap: 5,
-    justifyContent: 'center',
+    alignItems: 'center',
   },
   
   viewPrice: {
