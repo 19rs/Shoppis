@@ -24,7 +24,7 @@ const User = () => {
       <View style={ styles.viewImg }>
         <Image
             resizeMode="contain"
-            style={{ width: 250, height: 250 }}
+            style={{ width: 200, height: 200 }}
             source={{ uri: user?.image }}
         />
       </View>
@@ -32,8 +32,8 @@ const User = () => {
         <Text style={ styles.username }>{ user?.username }</Text>
       </View>
       
-      <Text style={ styles.info }>{user?.firstName} </Text>
-      <Text style={ styles.info }>{ user?.lastName }</Text>
+      <Text style={ styles.info }>{user?.firstName} { user?.lastName } </Text>
+      {/* <Text style={ styles.info }>{ user?.lastName }</Text> */}
         
       <Text style={ styles.info }>{ user?.email} </Text>
 
@@ -53,13 +53,13 @@ export default User;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 30,
+    paddingVertical: 20,
     rowGap: 10,
     alignItems: 'center',
   },
   viewImg: {
-    width: 350,
-    height: 350,
+    width: 250,
+    height: 250,
     borderRadius: 350/2,
     backgroundColor: '#f8fafc',
     borderWidth: 3,

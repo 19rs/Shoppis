@@ -29,8 +29,8 @@ const Payment = ({navigation}: any) => {
   };
 
   return (
-    <SafeAreaView>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
 
       <View style={styles.viewInput}>
         <Text style={styles.label}>Card Number</Text>
@@ -61,7 +61,7 @@ const Payment = ({navigation}: any) => {
         <TextInput
           style={styles.inputAddress} 
           multiline={true}
-          numberOfLines={6}
+          numberOfLines={4}
           onChangeText={setAddress}
         />
       </View>
@@ -74,7 +74,6 @@ const Payment = ({navigation}: any) => {
         >
           <Text style={styles.buttonText}>Confirmar Compra</Text>
       </TouchableOpacity>
-    </View>
     </SafeAreaView>
   );
 };
@@ -83,17 +82,19 @@ export default Payment;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    // justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 0,
   },
   viewInput: {
     width: '90%',
-    rowGap: 5
+    rowGap: 4
   },
   label: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 5,
     marginLeft: 8,
   },
   input: {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     minHeight: 50,
     borderWidth: 1,
-    marginBottom: 15,
+    marginBottom: 10,
     backgroundColor: '#fff',
     borderRadius: 2,
     borderColor: '#e2e8f0'
@@ -125,7 +126,7 @@ inputAddress: {
     alignItems: "center",
     flexDirection: 'row',
     paddingVertical: 20,
-    marginTop: 50,
+    // marginTop: 50,
   },
   buttonText: {
     color: "#fff",

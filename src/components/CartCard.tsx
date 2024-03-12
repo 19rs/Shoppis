@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: 'bold',
     color: 'green',
+    marginRight: 10
   },
   button: {
     width: "80%",

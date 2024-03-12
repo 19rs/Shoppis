@@ -37,7 +37,7 @@ const Details = () => {
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView contentContainerStyle={styles.scroll}>
-      <View style={{width: '95%', borderWidth: 2, borderRadius: 5, borderColor: '#e2e8f0', marginTop: 10, padding: 20, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{minWidth: '95%', borderWidth: 2, borderRadius: 5, borderColor: '#e2e8f0', marginTop: 10, padding: 20, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
         <Image
             resizeMode="contain"
             style={{ width: 280, height: 250 }}
@@ -46,7 +46,9 @@ const Details = () => {
         <Text style={{position: 'absolute', top: 7, right: 5, fontWeight: 'bold', color: 'white', backgroundColor: '#16a34a', paddingVertical: 6, paddingHorizontal: 8, borderRadius: 5, shadowColor: '#fff', shadowRadius: 5}}>{ discountPercentage }% OFF</Text>
       </View>
 
-        <Text style={ styles.title }>{ title }</Text>
+        <View style={ styles.viewTitle }>
+          <Text style={ styles.title }>{ title }</Text>
+        </View>
         <Text style={ styles.description }>{ description }</Text>
 
         <View style={ styles.viewBrandCategory }>
@@ -95,18 +97,19 @@ const Details = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     alignItems: 'center',
   },
   scroll: {
     alignItems: 'center',
+    width: '100%',
     rowGap: 10,
     paddingBottom: 15,
   },
-  title: {
-    width: '100%',
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  viewTitle: {
+    minWidth: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#f8fafc',
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -116,7 +119,15 @@ const styles = StyleSheet.create({
     shadowColor: '#ccc',
     shadowOpacity: 0.5,
   },
+  title: {
+    // width: '100%',
+    fontSize: 25,
+    // flexShrink: 1,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   description: {
+    minWidth: '90%',
     justifyContent: 'center',
     textAlign: 'justify',
     paddingVertical: 30,
@@ -135,8 +146,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    columnGap: 50,
-    width: '95%',
+    columnGap: 20,
+    minWidth: '90%',
+    maxWidth: '90%',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -163,7 +175,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '95%',
+    minWidth: '80%',
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -181,7 +193,7 @@ const styles = StyleSheet.create({
   },
   
   viewPrice: {
-    width: '80%',
+    minWidth: '80%',
     flexDirection: 'row',
     justifyContent: 'center',
     columnGap: 5,
@@ -203,7 +215,7 @@ const styles = StyleSheet.create({
     color: 'green',
   },
   button: {
-    width: "80%",
+    minWidth: "80%",
     height: 50,
     backgroundColor: "#2563EB",
     justifyContent: "center",
