@@ -63,7 +63,7 @@ export const AppRoutes = () => {
         component={HomeRoutes}
         options={{
           tabBarIcon: () => (
-            <MaterialIcons name="home" size={30} color="#4169E1" />
+            <MaterialIcons name="home" size={30} color="#2563EB" />
           ),
         }}
       />
@@ -72,7 +72,7 @@ export const AppRoutes = () => {
         component={User}
         options={{
           tabBarIcon: () => (
-            <MaterialIcons name="person" size={30} color="#4169E1" />
+            <MaterialIcons name="person" size={30} color="#f7ce26" />
           ),
         }}
       />

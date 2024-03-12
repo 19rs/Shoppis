@@ -9,15 +9,23 @@ const Cart = ({navigation}: any) => {
   const { cart, getCart } = useContext(CartContext);
   
   let cartTotal = () => {
-    let total = 0;
+    let total: number = 0;
 
     if(cart) {
       cart.forEach(item => {
-        total += Math.round((item.product.price - (item.product.price * item.product.discountPercentage / 100)) * item.quantity);
+        total += (item.product.price - (item.product.price * item.product.discountPercentage / 100)) * item.quantity;
       })
     }
-      return total;
+      return total.toFixed(2);
   }
+
+  const checkCart = () => {
+    if(!cart.length) {
+      showError("Sem itens no carrinho");
+    } else {
+      navigation.navigate('Payment');
+    }
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -28,8 +36,6 @@ const Cart = ({navigation}: any) => {
       }
     };
     getData();
-    console.log('carrinho')
-    console.log(cart)
   }, []);
 
   return (
@@ -42,10 +48,11 @@ const Cart = ({navigation}: any) => {
       
       <View style={styles.viewTotalCompra}>
         <Text style={styles.valorCompra}>Cart Total: ${ cartTotal() }</Text>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate('Payment')
+            checkCart();
           }}
         >
           <Text style={styles.buttonText}>Finalizar Compra</Text>

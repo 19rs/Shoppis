@@ -8,6 +8,7 @@ type CartContextProps = {
   getCart: () => void;
   addProduct: (product: ProductDTO) => void;
   removeProduct: (id: number) => void;
+  clearCart: () => void;
 };
 
 type CartProviderProps = {
@@ -42,7 +43,6 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
 
   const addProduct = (value: ProductDTO) => {
     const existingProduct = cart?.find(({ product }) => value.id === product.id);
-    // const existingProduct = cart !== null ? cart.find(({ product }) => value.id === product.id) : null;
 
     if (existingProduct) {
       const newcart = cart?.map((item) =>
@@ -61,23 +61,26 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
       storeCart(newCart);
     }
     console.log(cart)
+    
   };
 
   const removeProduct = (value: number) => {
     const newCart = [...cart];
 
     const itemIndex = newCart.findIndex(({ product }) => value === product.id);
-    console.log('achou')
-    console.log(itemIndex)
-    console.log(newCart[itemIndex].quantity)
 
     newCart[itemIndex].quantity > 1 ? newCart[itemIndex].quantity-- : newCart.splice(itemIndex, 1) 
     setCart(newCart);
     storeCart(newCart);
   };
 
+  const clearCart = () => {
+    setCart([]);
+    storeCart([]);
+  }
+
   return (
-    <CartContext.Provider value={{ cart, getCart, addProduct, removeProduct }}>
+    <CartContext.Provider value={{ cart, getCart, addProduct, removeProduct, clearCart }}>
       {children}
     </CartContext.Provider>
   );

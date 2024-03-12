@@ -3,13 +3,11 @@ import React, { useContext } from "react";
 import { ProductDTO } from "../types/Products";
 import { useRoute } from "@react-navigation/native";
 import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-// import PagerView from 'react-native-pager-view';
 import { FontAwesome } from '@expo/vector-icons';
 import { CartContext } from "../contexts/CartContext";
 import { FontAwesome5 } from '@expo/vector-icons';
+import { showSuccess } from "../components/Toast";
 
 
 const Details = () => {
@@ -19,7 +17,7 @@ const Details = () => {
 
   const { addProduct } = useContext(CartContext);
 
-  const precoComDesconto: number = Math.round(price - (price * discountPercentage / 100));
+  const precoComDesconto: number = price - (price * discountPercentage / 100);
 
   const ratingIcon = () => {
     const nota = Math.trunc(rating);
@@ -27,7 +25,7 @@ const Details = () => {
 
     for(let i = 0; i < nota; i++) {
       array.push(
-      <FontAwesome name="star" size={20} color="gold" key={i}/>
+        <FontAwesome name="star" size={20} color="gold" key={i}/>
       )
     }
     if(nota < 5 && (rating - nota) >= 0.5) {
@@ -45,7 +43,7 @@ const Details = () => {
             style={{ width: 280, height: 250 }}
             source={{ uri: thumbnail }}
         />
-        <Text style={{position: 'absolute', top: 5, right: 5, fontWeight: 'bold', color: 'white', backgroundColor: '#16a34a', paddingVertical: 5, paddingHorizontal: 8, borderRadius: 5, shadowColor: '#fff', shadowRadius: 5}}>{ discountPercentage }% OFF</Text>
+        <Text style={{position: 'absolute', top: 7, right: 5, fontWeight: 'bold', color: 'white', backgroundColor: '#16a34a', paddingVertical: 6, paddingHorizontal: 8, borderRadius: 5, shadowColor: '#fff', shadowRadius: 5}}>{ discountPercentage }% OFF</Text>
       </View>
 
         <Text style={ styles.title }>{ title }</Text>
@@ -56,6 +54,7 @@ const Details = () => {
             <MaterialCommunityIcons name="registered-trademark" size={24} color="black" />
             <Text>{ brand }</Text>
           </View>
+
           <View style={ styles.viewCategory }>
             <AntDesign name="tagso" size={24} color="black" />
             <Text>{ category }</Text>
@@ -66,27 +65,23 @@ const Details = () => {
           <View style={ styles.viewRating }>
             <Text>Rating:</Text>
             { ratingIcon() }
-            {/* <Text style={{ marginLeft: 10}}>({ rating })</Text> */}
           </View>
-          {/* <Text>Discount: { discountPercentage } %</Text> */}
         </View>
         
-        
-       
-        
-        {/* <Text>Discount: { discountPercentage } %</Text> */}
 
         <View style={ styles.viewPrice }>
           <Text style={ styles.textPrice }>Price: </Text>
-          <Text style={ styles.price }>${ price }</Text>
-          <Text style={ styles.priceWithDiscount }>${ precoComDesconto }</Text>
-          {/* <Text>{ discountPercentage }% OFF</Text> */}
+
+          <View style={{columnGap: 10, flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={ styles.price }>${ price.toFixed(2) }</Text>
+            <Text style={ styles.priceWithDiscount }>${ precoComDesconto.toFixed(2) }</Text>
+          </View>
         </View>
         
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            console.log(product)
+            showSuccess('Produto adicionado ao carrinho');
             addProduct(product)}}
         >
           <FontAwesome5 name="cart-plus" size={24} style={{marginRight: 20}} color="white" />
@@ -100,15 +95,12 @@ const Details = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingVertical: 10,
-    // rowGap: 10,
     alignItems: 'center',
   },
   scroll: {
-    // flex: 1,
     alignItems: 'center',
     rowGap: 10,
-    marginBottom: 15,
+    paddingBottom: 15,
   },
   title: {
     width: '100%',
@@ -118,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8fafc',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderTopWidth: 2,
+    borderWidth: 2,
     borderBottomWidth: 3,
     borderColor: '#e2e8f0',
     shadowColor: '#ccc',
@@ -171,7 +163,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    // justifyContent: 'space-between',
     width: '95%',
     fontSize: 25,
     fontWeight: 'bold',
@@ -217,7 +208,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
-    // marginBottom: 5,
     flexDirection: 'row',
   },
   buttonText: {

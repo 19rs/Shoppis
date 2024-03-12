@@ -11,7 +11,7 @@ interface Props {
 const CartCard = ({ item }: Props) => {
   const { addProduct, removeProduct } = useContext(CartContext);
 
-  const precoComDesconto: number = Math.round(item.product.price - (item.product.price * item.product.discountPercentage / 100));
+  const precoComDesconto: number = item.product.price - (item.product.price * item.product.discountPercentage / 100);
 
   return (
     <View style={ styles.card }>
@@ -27,27 +27,27 @@ const CartCard = ({ item }: Props) => {
         <Text style={ styles.title }>{item.product.title}</Text>
         <Text style={ styles.description }>{item.product.description}</Text>
         
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={ styles.price }>Price: $ {precoComDesconto}</Text>
-          <Text>Quantity: {item.quantity}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5}}>
+          <Text style={ styles.price }>Price: $ {precoComDesconto.toFixed(2)}</Text>
+          <Text style={{fontWeight: '600'}}>Quantity: {item.quantity}</Text>
         </View>
         
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Text style={styles.price}>Subtotal: $ {precoComDesconto * item.quantity}</Text>
-      
-          <View style={{flexDirection: 'row', alignItems: 'center', columnGap: 15}}>
+          <Text style={styles.price}>Subtotal: $ { (precoComDesconto * item.quantity).toFixed(2) }</Text>
+
+          <View style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
             <TouchableOpacity 
               onPress={() => {
                 removeProduct(item.product.id)}}
             >
-              <FontAwesome name="minus-circle" size={24} color="red" />
+              <FontAwesome name="minus-circle" size={24} color="#ef4444" />
             </TouchableOpacity>
           
             <TouchableOpacity
               onPress={() => {
                 addProduct(item.product)}}
             >
-              <FontAwesome name="plus-circle" size={24} color="green" />
+              <FontAwesome name="plus-circle" size={24} color="#16a34a" />
             </TouchableOpacity>
           </View>
         </View>

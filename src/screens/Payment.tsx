@@ -1,11 +1,14 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
-import { showError } from "../components/Toast";
+import React, { useContext, useState } from "react";
+import { showError, showSuccess } from "../components/Toast";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CartContext } from "../contexts/CartContext";
 
 
 
-const Payment = () => {
+const Payment = ({navigation}: any) => {
+  const { clearCart } = useContext(CartContext);
+
   const [address, setAddress] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [cardSecurityCode, setCardSecurityCode] = useState('');
@@ -13,43 +16,26 @@ const Payment = () => {
 
   const confirmarCompra = () => {
     if(address && cardNumber && cardSecurityCode && cardExpireData) {
-      console.log('compra confirmada')
-      
+      clearCart();
+      setAddress('');
+      setCardNumber('');
+      setCardSecurityCode('');
+      setCardExpireDate('');
+      navigation.navigate('Cart');
+      showSuccess('Compra realizada! Obrigado por comprar conosco! :)');
     } else {
-      console.log('dados incompletos')
       showError('Dados incompletos')
-
-      // Toast.show("Não foi possível salvar o carrinho", {
-      //   duration: 3000,
-      //   position: Toast.positions.BOTTOM,
-      //   shadow: false,
-      //   animation: true,
-      //   hideOnPress: true,
-      //   delay: 0,
-      //   backgroundColor: "red",
-      // });
     }
   };
 
   return (
     <SafeAreaView>
     <View style={styles.container}>
-      <View style={styles.viewInput}>
-        <Text style={styles.label}>Address</Text>
-        <TextInput
-          style={styles.input} 
-          multiline={true}
-          numberOfLines={5}
-          placeholder="Insert the delivery address"
-          onChangeText={setAddress}
-        />
-      </View>
 
       <View style={styles.viewInput}>
         <Text style={styles.label}>Card Number</Text>
         <TextInput
           style={styles.input} 
-          placeholder="Insert the card number"
           onChangeText={setCardNumber}
         />
       </View>
@@ -58,7 +44,6 @@ const Payment = () => {
         <Text style={styles.label}>Card Security Code</Text>
         <TextInput
           style={styles.input} 
-          placeholder="Insert card security code"
           onChangeText={setCardSecurityCode}
         />
       </View>
@@ -67,8 +52,17 @@ const Payment = () => {
         <Text style={styles.label}>Card Expire Date</Text>
         <TextInput
           style={styles.input} 
-          placeholder="Insert card expire date"
           onChangeText={setCardExpireDate}
+        />
+      </View>
+
+      <View style={styles.viewInput}>
+        <Text style={styles.label}>Address</Text>
+        <TextInput
+          style={styles.inputAddress} 
+          multiline={true}
+          numberOfLines={6}
+          onChangeText={setAddress}
         />
       </View>
 
@@ -89,7 +83,6 @@ export default Payment;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     alignItems: 'center',
     marginTop: 50,
   },
@@ -114,9 +107,19 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderColor: '#e2e8f0'
 },
+inputAddress: {
+  width: '100%',
+  paddingHorizontal: 10,
+  paddingVertical: 10,
+  borderWidth: 1,
+  marginBottom: 15,
+  textAlignVertical: 'top',
+  backgroundColor: '#fff',
+  borderRadius: 2,
+  borderColor: '#e2e8f0'
+},
   button: {
-    width: "80%",
-    height: 60,
+    width: "90%",
     backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",

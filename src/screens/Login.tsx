@@ -47,19 +47,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     marginVertical: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
+    borderColor: '#e2e8f0',
+    backgroundColor: '#fff',
   },
   button: {
     width: "100%",
-    height: 50,
-    backgroundColor: "#606060",
+    backgroundColor: "#2563EB",
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 12,
+    paddingVertical: 15
   },
   buttonText: {
     color: "#fff",
+    fontSize: 18,
   },
   title: {
     color: "#252525",
