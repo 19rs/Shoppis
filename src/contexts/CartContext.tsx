@@ -19,7 +19,7 @@ export const CartContext = createContext<CartContextProps>(
 );
 
 export const CartContextProvider = ({ children }: CartProviderProps) => {
-  const [cart, setCart] = useState<ICartItem[] | null>([]);
+  const [cart, setCart] = useState<ICartItem[] >([]);
 
   const storeCart = async (value: ICartItem[]) => {
     try {
@@ -42,6 +42,7 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
 
   const addProduct = (value: ProductDTO) => {
     const existingProduct = cart?.find(({ product }) => value.id === product.id);
+    // const existingProduct = cart !== null ? cart.find(({ product }) => value.id === product.id) : null;
 
     if (existingProduct) {
       const newcart = cart?.map((item) =>

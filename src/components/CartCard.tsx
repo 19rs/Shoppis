@@ -15,37 +15,44 @@ const CartCard = ({ item }: Props) => {
 
   return (
     <View style={ styles.card }>
-        <View style={ styles.img }>
-          <Image
-            resizeMode="center"
-            style={{ width: 100, height: 100 }}
-            source={{ uri: item.product.thumbnail }}
-          />
-        </View>
-        <View style={ styles.info }>
-          <Text style={ styles.title }>{item.product.title}</Text>
-          <Text style={ styles.description }>{item.product.description}</Text>
-          <Text style={ styles.price }>Price: $ {precoComDesconto}</Text>
-          <Text >Quantity: {item.quantity}</Text>
-          <Text >Subtotal: {precoComDesconto * item.quantity}</Text>
-        </View>
-
-        <TouchableOpacity
-         
-          onPress={() => {
-            removeProduct(item.product.id)}}
-        >
-          <FontAwesome name="minus-circle" size={24} color="red" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-         
-         onPress={() => {
-           addProduct(item.product)}}
-       >
-        <FontAwesome name="plus-circle" size={24} color="green" />
-       </TouchableOpacity>
+      <View style={ styles.img }>
+        <Image
+          resizeMode="center"
+          style={{ width: 100, height: 100 }}
+          source={{ uri: item.product.thumbnail }}
+        />
       </View>
+      
+      <View style={ styles.info }>
+        <Text style={ styles.title }>{item.product.title}</Text>
+        <Text style={ styles.description }>{item.product.description}</Text>
+        
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={ styles.price }>Price: $ {precoComDesconto}</Text>
+          <Text>Quantity: {item.quantity}</Text>
+        </View>
+        
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Text style={styles.price}>Subtotal: $ {precoComDesconto * item.quantity}</Text>
+      
+          <View style={{flexDirection: 'row', alignItems: 'center', columnGap: 15}}>
+            <TouchableOpacity 
+              onPress={() => {
+                removeProduct(item.product.id)}}
+            >
+              <FontAwesome name="minus-circle" size={24} color="red" />
+            </TouchableOpacity>
+          
+            <TouchableOpacity
+              onPress={() => {
+                addProduct(item.product)}}
+            >
+              <FontAwesome name="plus-circle" size={24} color="green" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </View>
   );
 };
 

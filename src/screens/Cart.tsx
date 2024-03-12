@@ -1,11 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect } from "react";
 import { showError } from "../components/Toast";
 import { CartContext } from "../contexts/CartContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CartCard from "../components/CartCard";
 
-const Cart = () => {
+const Cart = ({navigation}: any) => {
   const { cart, getCart } = useContext(CartContext);
   
   let cartTotal = () => {
@@ -39,7 +39,18 @@ const Cart = () => {
         renderItem={({ item }) => <CartCard item={item} />}
         keyExtractor={(item) => item.product.id.toString()}
       />
-      <Text>{ cartTotal() }</Text>
+      
+      <View style={styles.viewTotalCompra}>
+        <Text style={styles.valorCompra}>Cart Total: ${ cartTotal() }</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate('Payment')
+          }}
+        >
+          <Text style={styles.buttonText}>Finalizar Compra</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -51,5 +62,35 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  viewTotalCompra: {
+    width: '100%',
+    rowGap: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderTopWidth: 4,
+    borderColor: '#e2e8f0',
+    shadowColor: '#ccc',
+    shadowRadius: 5,
+    shadowOpacity: 0.5,
+    paddingVertical: 20
+  },
+  valorCompra: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  button: {
+    width: "80%",
+    height: 50,
+    backgroundColor: "#2563EB",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: 'row',
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: 'bold'
   },
 });
