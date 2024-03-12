@@ -60,8 +60,6 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
       setCart(newCart);
       storeCart(newCart);
     }
-    console.log(cart)
-    
   };
 
   const removeProduct = (value: number) => {
